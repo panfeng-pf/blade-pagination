@@ -1,0 +1,52 @@
+<html>
+
+<head>
+	<link rel="stylesheet" type="text/css" href="../blade-pagination.css" >
+</head>
+
+<body>
+	<div>
+		<ul id="test1" class="blade-pagination" data-current="4" data-total="8">
+		</ul>
+	</div>
+	<div>
+		<ul id="test2" class="blade-pagination" data-current="1" data-total="8">
+		</ul>
+	</div>
+	<div>
+		<ul id="test3" class="blade-pagination" data-current="8" data-total="8">
+		</ul>
+	</div>
+	
+	<script type="text/javascript" src="./lib/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="../jquery.blade-pagination.js"></script>
+	
+	<script>
+		$(function() {
+			$('#test1').bladePagination({
+				clickPage: function(page) {
+					alert(page);
+				}
+			});
+			$('#test2').bladePagination({
+				maxPageNum: 3,
+				firstLabel: 'First',
+				prevLabel: 'Prev',
+				nextLabel: 'Next',
+				lastLabel: 'Last',
+				moreLabel: '...',
+				clickPage: function(page) {
+					alert(page);
+				}
+			});
+			$('#test3').bladePagination({
+				maxPageNum: 3,
+				clickPage: function(page) {
+					alert(page);
+				}
+			});
+		});
+	</script>
+</body>
+
+</html>

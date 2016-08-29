@@ -1,0 +1,49 @@
+/*!
+ * Blade Pagination - v1.0.0 - 2016-06-11
+ * jQuery Plug-in
+ * http://github.com/panfeng-pf/blade-pagination
+ * Copyright (c) 2016 Blade Pan; Licensed Apache 2.0
+ * Dependency: jQuery (test with jQuery v1.11.2)
+ */
+ul.blade-pagination {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+ul.blade-pagination li.page {
+	float: left;
+	border: 1px solid #BBB;
+	padding: 5px 8px;
+	margin: 3px;
+	border-radius: 4px;
+	cursor: pointer;
+	color: steelblue;
+}
+
+ul.blade-pagination li.page:hover {
+	background: #EEE;
+}
+
+ul.blade-pagination li.page.active {
+	background: steelblue;
+	cursor: default;
+	color: white;
+	border: 1px solid steelblue;
+}
+
+ul.blade-pagination li.page.disabled {
+	background: white;
+	cursor: not-allowed;
+	color: darkgray;
+}
+
+ul.blade-pagination li.more {
+	float: left;
+	padding: 5px 8px;
+	margin: 3px;
+}
+
+ul.blade-pagination li.end {
+	clear: both;
+}
