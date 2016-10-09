@@ -61,24 +61,24 @@
 	function createPagination(jqPagination, opts) {
 		var currPage = jqPagination.data('current');
 		var totalPage = jqPagination.data('total');
-		var pageShowArray = new Array();
+		var pageShowArray = [];
 		
 		//first page
 		pageShowArray.push({
-			type: 'page first' + ((1 == currPage) ? ' disabled' : '')
-			, page: 1
-			, show: opts.firstLabel
+			type: 'page first' + ((1 == currPage) ? ' disabled' : ''),
+			page: 1,
+			show: opts.firstLabel,
 		});
 		
 		//previous page
 		pageShowArray.push({
-			type: 'page prev' + ((1 == currPage) ? ' disabled' : '')
-			, page: (currPage <= 1) ? 1 : (currPage - 1)
-			, show: opts.prevLabel
+			type: 'page prev' + ((1 == currPage) ? ' disabled' : ''),
+			page: (currPage <= 1) ? 1 : (currPage - 1),
+			show: opts.prevLabel,
 		});
 		
 		//page number
-		var pageNumArray = new Array();
+		var pageNumArray = [];
 		var leftPageNum = (opts.maxPageNum - 1) / 2;
 		var rightPageNum = opts.maxPageNum - 1 - leftPageNum;
 		if(currPage - leftPageNum < 1) {
@@ -114,46 +114,46 @@
 		}
 		if(pageNumArray[0] > 1) {
 			pageShowArray.push({
-				type: 'more'
-				, page: -1
-				, show: opts.moreLabel
+				type: 'more',
+				page: -1,
+				show: opts.moreLabel,
 			});
 		}
 		for(var i = 0; i < pageNumArray.length; i ++) {
 			var pageNum = pageNumArray[i];
 			pageShowArray.push({
-				type: 'page' + ((pageNum == currPage) ? ' active' : '')
-				, page: pageNum
-				, show: pageNum
+				type: 'page' + ((pageNum == currPage) ? ' active' : ''),
+				page: pageNum,
+				show: pageNum,
 			});
 		}
 		if(pageNumArray[pageNumArray.length - 1] < totalPage) {
 			pageShowArray.push({
-				type: 'more'
-				, page: -1
-				, show: opts.moreLabel
+				type: 'more',
+				page: -1,
+				show: opts.moreLabel,
 			});
 		}
 		
 		//next page
 		pageShowArray.push({
-			type: 'page next' + ((totalPage == currPage) ? ' disabled' : '')
-			, page: (currPage >= totalPage) ? totalPage : (currPage + 1)
-			, show: opts.nextLabel
+			type: 'page next' + ((totalPage == currPage) ? ' disabled' : ''),
+			page: (currPage >= totalPage) ? totalPage : (currPage + 1),
+			show: opts.nextLabel,
 		});
 		
 		//last page
 		pageShowArray.push({
-			type: 'page last' + ((totalPage == currPage) ? ' disabled' : '')
-			, page: totalPage
-			, show: opts.lastLabel
+			type: 'page last' + ((totalPage == currPage) ? ' disabled' : ''),
+			page: totalPage,
+			show: opts.lastLabel,
 		});
 		
 		//end page
 		pageShowArray.push({
-			type: 'end'
-			, page: -1
-			, show: ''
+			type: 'end',
+			page: -1,
+			show: '',
 		});
 		
 		//create page
