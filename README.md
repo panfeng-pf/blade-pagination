@@ -43,6 +43,7 @@ How to Use
     nextLabel: '&gt;',   // >
     lastLabel: '&gt;|',  // >|
     moreLabel: '...',
+    rebuildAfterClick: false,
     clickPage: function(page) {}
 }
 ```
