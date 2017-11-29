@@ -11,33 +11,16 @@
 	 *==============================================
 	 */
 	$.fn.bladePagination = function(options) {
-		var opts = $.extend({}, $.fn.bladePagination.defaults, options);
-		return this.each(function() {
-			var jqPagination = $(this);
-			if(jqPagination.hasClass('blade-pagination')) {
-				//create all pages
-				createPagination(jqPagination, opts);
-				
-				//key parameters
-				var keyParams = {
-					jqFirstPage: jqPagination.find('li.page.first'),
-					jqPrevPage: jqPagination.find('li.page.prev'),
-					jqNextPage: jqPagination.find('li.page.next'),
-					jqLastPage: jqPagination.find('li.page.last'),
-					jqPageSet: jqPagination.find('li.page')
-				};
-				
-				//event handler
-				keyParams.jqPageSet.off('click');
-				keyParams.jqPageSet.click(function() {
-					var jqPage = $(this);
-					if(! jqPage.hasClass('active')) {
-						var page = jqPage.data('page');
-						opts.clickPage(page);
-					}
-				});
-			}
-		});
+		if(typeof(options) === 'object' || typeof(options) === 'undefined') {
+			var settings = $.extend({}, $.fn.bladePagination.defaults, options);
+			return this.each(function() {
+				var jqPagination = $(this);
+				if(jqPagination.hasClass('blade-pagination')) {
+					createPagination(jqPagination, settings);
+					initPageClick(jqPagination, settings);
+				}
+			});
+		}
 	};
 	
 	/*==============================================
@@ -51,36 +34,37 @@
 		nextLabel: '&gt;',   // >
 		lastLabel: '&gt;|',  // >|
 		moreLabel: '...',
-		clickPage: function(page) {}
+		rebuildAfterClick: false,
+		clickPage: function(page, jqPagination) {}
 	};
 	
 	/*==============================================
 	 * private functions
 	 *==============================================
 	 */
-	function createPagination(jqPagination, opts) {
-		var currPage = jqPagination.data('current');
-		var totalPage = jqPagination.data('total');
+	var createPagination = function(jqPagination, settings) {
+		var currPage = Number(jqPagination.attr('data-current'));
+		var totalPage = Number(jqPagination.attr('data-total'));
 		var pageShowArray = new Array();
 		
 		//first page
 		pageShowArray.push({
 			type: 'page first' + ((1 == currPage) ? ' disabled' : '')
 			, page: 1
-			, show: opts.firstLabel
+			, show: settings.firstLabel
 		});
 		
 		//previous page
 		pageShowArray.push({
 			type: 'page prev' + ((1 == currPage) ? ' disabled' : '')
 			, page: (currPage <= 1) ? 1 : (currPage - 1)
-			, show: opts.prevLabel
+			, show: settings.prevLabel
 		});
 		
 		//page number
 		var pageNumArray = new Array();
-		var leftPageNum = (opts.maxPageNum - 1) / 2;
-		var rightPageNum = opts.maxPageNum - 1 - leftPageNum;
+		var leftPageNum = (settings.maxPageNum - 1) / 2;
+		var rightPageNum = settings.maxPageNum - 1 - leftPageNum;
 		if(currPage - leftPageNum < 1) {
 			for(var i = leftPageNum; i > 0; i --) {
 				var page = currPage - i;
@@ -116,7 +100,7 @@
 			pageShowArray.push({
 				type: 'more'
 				, page: -1
-				, show: opts.moreLabel
+				, show: settings.moreLabel
 			});
 		}
 		for(var i = 0; i < pageNumArray.length; i ++) {
@@ -131,7 +115,7 @@
 			pageShowArray.push({
 				type: 'more'
 				, page: -1
-				, show: opts.moreLabel
+				, show: settings.moreLabel
 			});
 		}
 		
@@ -139,21 +123,14 @@
 		pageShowArray.push({
 			type: 'page next' + ((totalPage == currPage) ? ' disabled' : '')
 			, page: (currPage >= totalPage) ? totalPage : (currPage + 1)
-			, show: opts.nextLabel
+			, show: settings.nextLabel
 		});
 		
 		//last page
 		pageShowArray.push({
 			type: 'page last' + ((totalPage == currPage) ? ' disabled' : '')
 			, page: totalPage
-			, show: opts.lastLabel
-		});
-		
-		//end page
-		pageShowArray.push({
-			type: 'end'
-			, page: -1
-			, show: ''
+			, show: settings.lastLabel
 		});
 		
 		//create page
@@ -163,5 +140,25 @@
 			var html = '<li class="' + pageShow.type + '" data-page="' + pageShow.page + '">' + pageShow.show + '</li>';
 			jqPagination.append(html);
 		}
+	}
+	
+	var initPageClick = function(jqPagination, settings) {
+		var jqPageSet = jqPagination.find('li.page');
+		
+		//event handler
+		jqPageSet.off('click');
+		jqPageSet.click(function() {
+			var jqPage = $(this);
+			if(! (jqPage.hasClass('active') || jqPage.hasClass('disabled'))) {
+				var page = jqPage.data('page');
+				settings.clickPage(page, jqPagination);
+				
+				if(settings.rebuildAfterClick) {
+					//rebuild
+					createPagination(jqPagination, settings);
+					initPageClick(jqPagination, settings);
+				}
+			}
+		});
 	}
 })(jQuery);

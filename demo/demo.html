@@ -2,26 +2,46 @@
 
 <head>
 	<link rel="stylesheet" type="text/css" href="../blade-pagination.css" >
+	<style>
+		.test {
+		}
+		.test > div {
+			border: 1px solid #aaa;
+			border-radius: 5px;
+			margin: 10px;
+			padding: 10px;
+			float: left;
+		}
+		.test:after {
+			display: table;
+			content: "";
+			width: 0;
+			clear: both;
+		}
+	</style>
 </head>
 
 <body>
-	<div>
-		<div>Example 1</div>
-		<ul id="test1" class="blade-pagination" data-current="4" data-total="8">
-		</ul>
-		<hr>
+	<div id="test1" class="test">
+		<div>
+			<div>Example 1 (default)</div>
+			<ul class="blade-pagination" data-current="4" data-total="8">
+			</ul>
+		</div>
 	</div>
-	<div>
-		<div>Example 2</div>
-		<ul id="test2" class="blade-pagination" data-current="1" data-total="8">
-		</ul>
-		<hr>
+	<div id="test2" class="test">
+		<div>
+			<div>Example 2 (page number you clicked: <strong>1</strong>)</div>
+			<ul class="blade-pagination" data-current="1" data-total="8">
+			</ul>
+		</div>
 	</div>
-	<div>
-		<div>Example 3</div>
-		<ul id="test3" class="blade-pagination" data-current="8" data-total="8">
-		</ul>
-		<hr>
+	<div id="test3" class="test">
+		<div>
+			<div>Example 3 (re-build after clicked)</div>
+			<ul class="blade-pagination" data-current="8" data-total="8">
+			</ul>
+		</div>
 	</div>
 	
 	<script type="text/javascript" src="./lib/jquery-1.11.2.min.js"></script>
@@ -29,28 +49,25 @@
 	
 	<script>
 		$(function() {
-			$('#test1').bladePagination({
-				clickPage: function(page) {
-					alert(page);
+			$('#test1').find('.blade-pagination').bladePagination();
+			$('#test2').find('.blade-pagination').bladePagination({
+				clickPage: function(page, jqPagination) {
+					jqPagination.parent().find('strong').text(page);
 				}
 			});
-			$('#test2').bladePagination({
+			$('#test3').find('.blade-pagination').bladePagination({
 				maxPageNum: 3,
 				firstLabel: 'First',
 				prevLabel: 'Prev',
 				nextLabel: 'Next',
 				lastLabel: 'Last',
-				moreLabel: '...',
-				clickPage: function(page) {
-					alert(page);
+				moreLabel: '::',
+				rebuildAfterClick: true,
+				clickPage: function(page, jqPagination) {
+					jqPagination.attr('data-current', page);
 				}
 			});
-			$('#test3').bladePagination({
-				maxPageNum: 3,
-				clickPage: function(page) {
-					alert(page);
-				}
-			});
+			
 		});
 	</script>
 </body>

@@ -44,6 +44,9 @@ ul.blade-pagination li.more {
 	margin: 3px;
 }
 
-ul.blade-pagination li.end {
+ul.blade-pagination:after {
+	display: table;
+	content: "";
+	width: 0;
 	clear: both;
 }
