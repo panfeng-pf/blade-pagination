@@ -26,24 +26,28 @@ How to Use
 
 ### Initial pagination
 ```html
-<script type="text/javascript">
-  $(function() {
-	$('selector').bladePagination();
-	// or $('selector').bladePagination(options);
-  });
-</script>
+<body>
+  <ul iclass="blade-pagination"></ul>
+
+  <script type="text/javascript">
+    $(function() {
+      $('.blade-pagination').bladePagination();
+      // or $('.blade-pagination').bladePagination(options);
+    });
+  </script>
+</body>
 ```
 
 ### Option Description
 ```javascript
 {
-    maxPageNum: 5,
-    firstLabel: '|&lt;', // |<
-    prevLabel: '&lt;',   // <
-    nextLabel: '&gt;',   // >
-    lastLabel: '&gt;|',  // >|
-    moreLabel: '...',
-    rebuildAfterClick: false,
-    clickPage: function(page) {}
+  maxPageNum: 5,
+  firstLabel: '|&lt;', // |<
+  prevLabel: '&lt;',   // <
+  nextLabel: '&gt;',   // >
+  lastLabel: '&gt;|',  // >|
+  moreLabel: '...',
+  rebuildAfterClick: false,
+  clickPage: function(page) {}
 }
 ```
