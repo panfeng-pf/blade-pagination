@@ -27,7 +27,7 @@ How to Use
 ### Initial pagination
 ```html
 <body>
-  <ul iclass="blade-pagination"></ul>
+  <ul class="blade-pagination"></ul>
 
   <script type="text/javascript">
     $(function() {
